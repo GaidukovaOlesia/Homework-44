@@ -34,22 +34,23 @@ form.addEventListener("submit", e => {
                     div.append(p);
                     document.body.append(div);
 
-                    const input = document.createElement("input");
-                    const label = document.createElement("label");
                     const button = document.createElement("button");
-                    input.type = "text";
-                    input.placeholder = "Додайте коментар";
-                    label.append(input);
-                    button.innerText = "Зберегти";
+                    button.innerText = "Коментарі";
 
-                    div.append(label);
                     div.append(button);
 
                     button.addEventListener("click", () => {
-                        const divComment = document.createElement("div");
-                        divComment.innerText = input.value;
+                        controller("https://jsonplaceholder.typicode.com/comments")
+                            .then(response => {
+                                response.forEach(comment => {
 
-                        div.append(divComment);
+                                    if(comment.postId === post.id) {
+                                        const divComment = document.createElement("div");
+                                        divComment.innerText = comment.body;
+                                        div.append(divComment);
+                                    }
+                                })
+                            })
                     })
 
                  }
